@@ -3,12 +3,24 @@ const cors = require("cors");
 
 const app = express();
 
+app.use(express.json());
 app.use(cors());
 
-app.use(express.json());
+const { 
+    getCompliment,
+    getFortune,
+    getProfile,
+    editProfile,
+    createProfile,
+    deleteProfile
+} = require('./controller');
 
-const { getCompliment } = require('./controller')
+app.get(`/api/compliment`, getCompliment);
+app.get('/api/fortune', getFortune);
+app.get(`/api/profile`, getProfile)
+app.put(`/api/profile/:id`, editProfile);
+app.post(`/api/profile`, createProfile);
+app.delete(`/api/profile/:id`, deleteProfile);
 
-app.get("/api/compliment", getCompliment);
-
-app.listen(4000, () => console.log("Server running on 4000"));
+const PORT = 4000;
+app.listen(PORT, () => console.log(`Server running on ${PORT}`));
